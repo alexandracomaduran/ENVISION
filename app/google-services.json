@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "500648230494",
+    "project_id": "envision-f77da",
+    "storage_bucket": "envision-f77da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500648230494:android:ac16884d0f6e511005becf",
+        "android_client_info": {
+          "package_name": "com.aac.envision"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvMGGv1638NwfifNiUtkiDhamNGvFYkrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

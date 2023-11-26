@@ -1,4 +1,5 @@
 package com.aac.envision;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +13,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 // ...
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private FirebaseAuth firebaseAuth;
@@ -24,6 +25,15 @@ public class MainActivity extends AppCompatActivity {
 
         //Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
+
+        //Check if the user is signed in (non-null) and update UI accordingly.
+        //**Shows persistence.**
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        if(currentUser != null) {
+            // User is signed in, proceed to main app or show welcome message
+            // For example, start another activity or show content in this one
+            navigateToMainApp();
+        }
 
         //Initialize UI components
         usernameEditText = findViewById(R.id.username);
@@ -48,12 +58,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void navigateToMainApp() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private void performLogin() {
         String username = usernameEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
         if (username.isEmpty() || password.isEmpty()) {
-            Toast.makeText(MainActivity.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -63,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
                         // Sign in success
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         // Update UI with the signed-in user's information
-                        Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     } else {
                         // If sign in fails, display a message to the user.
-                        Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -76,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString().trim();
 
         if (username.isEmpty() || password.isEmpty()) {
-            Toast.makeText(MainActivity.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -86,10 +102,10 @@ public class MainActivity extends AppCompatActivity {
                         // Sign up success
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         // Update UI with the user's information
-                        Toast.makeText(MainActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Registration successful", Toast.LENGTH_SHORT).show();
                     } else {
                         // If sign up fails, display a message to the user.
-                        Toast.makeText(MainActivity.this, "Registration failed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Registration failed.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

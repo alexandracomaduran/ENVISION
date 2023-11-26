@@ -9,4 +9,6 @@
         <string name="authentication_failed">Authentication failed.</string>
         <string name="registration_successful">Registration successful</string>
         <string name="registration_failed">Registration failed.</string>
-    </resources>
+        <string name="hint_confirm_password">Confirm Password</string>
+        <string name="error_password_mismatch">Passwords do not match</string>
+</resources>

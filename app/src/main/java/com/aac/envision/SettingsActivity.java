@@ -1,5 +1,6 @@
 package com.aac.envision;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,12 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.CollectionReference;
+
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -25,14 +28,18 @@ public class SettingsActivity extends AppCompatActivity {
     private Button changeProfileDescriptionButton;
     private Button removeAccountButton;
     private Button logoutButton;
+    private FirebaseAuth firebaseAuth;
+    private BottomNavigationView bottomNavigationView;
 
     private boolean isAdmin = false; // Set this based on the user's role.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         // Initialize buttons
         usersManagementButton = findViewById(R.id.usersManagement);
@@ -41,15 +48,16 @@ public class SettingsActivity extends AppCompatActivity {
         changeProfileDescriptionButton = findViewById(R.id.changeProfileDescription);
         removeAccountButton = findViewById(R.id.removeAccountButton);
         logoutButton = findViewById(R.id.logoutButton);
+        bottomNavigationView = findViewById(R.id.navigation);
 
         if(currentUser != null) {
-            String userEmail = currentUser.getEmail();
+            String userUID = currentUser.getUid();
 
             //Query
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             CollectionReference usersCollection = db.collection("users");
 
-            usersCollection.document(currentUser.getEmail()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            usersCollection.document(userUID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
 
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -57,7 +65,7 @@ public class SettingsActivity extends AppCompatActivity {
                         //Document exists, retrieve the role field
                         String userRole = documentSnapshot.getString("role");
 
-                        //Visbility of Buttons
+                        //Visibility of Buttons
                         if ("Admin".equals(userRole)) {
                             usersManagementButton.setVisibility(View.VISIBLE);
                             postsManagementButton.setVisibility(View.VISIBLE);
@@ -85,8 +93,27 @@ public class SettingsActivity extends AppCompatActivity {
                         }
                     });
 
+        } else {
+            Intent loginIntent = new Intent(SettingsActivity.this, LoginActivity.class);
+            startActivity(loginIntent);
+            finish();
         }
 
+
+// Set up bottom navigation item selected listener
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+
+            if(item.getItemId() == R.id.home_navigation) {
+
+                Intent homeIntent = new Intent(SettingsActivity.this, HomeActivity.class);
+                startActivity(homeIntent);
+
+            } else if (item.getItemId() == R.id.profile_navigation){
+                Intent profileIntent = new Intent(SettingsActivity.this, ProfilePageActivity.class);
+                startActivity(profileIntent);
+            }
+            return true;
+        });
 
 
 
@@ -129,7 +156,13 @@ public class SettingsActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle Logout button click (common for both)
+                // Sign out the user
+                FirebaseAuth.getInstance().signOut();
+
+                // Navigate to the LoginActivity or your desired destination after logout
+                Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish(); // Close the SettingsActivity
             }
         });
     }

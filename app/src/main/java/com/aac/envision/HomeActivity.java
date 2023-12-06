@@ -8,13 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity {
     private TextView usernameTextView;
-    private Button adminButton;
-    private Button logoutButton;
+    private BottomNavigationView bottomNavigationView;
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -22,44 +22,25 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
-        logoutButton = findViewById(R.id.logoutButton);
+        //Initialize UI component
+        bottomNavigationView = findViewById(R.id.navigation);
 
-        if (currentUser != null) {
-            usernameTextView.setText(currentUser.getEmail());
-            // Check if the user is an admin
-            // This might involve checking a field in Firebase or Shared Preferences
-            // For simplicity, let's assume we check from Shared Preferences
-            boolean isAdmin = checkIfUserIsAdmin(currentUser);
-            adminButton.setVisibility(isAdmin ? View.VISIBLE : View.INVISIBLE);
-        }
+        bottomNavigationView.setOnItemSelectedListener(item -> {
 
-        logoutButton.setOnClickListener(v -> {
-            firebaseAuth.signOut();
-            navigateToLogin();
-        });
+            if(item.getItemId() == R.id.home_navigation) {
 
-        adminButton.setOnClickListener(v -> {
-            // Navigate to admin area
-            navigateToAdminArea();
-        });
+                Intent homeIntent = new Intent(HomeActivity.this, HomeActivity.class);
+                startActivity(homeIntent);
+
+            } else if (item.getItemId() == R.id.profile_navigation){
+                Intent profileIntent = new Intent(HomeActivity.this, ProfilePageActivity.class);
+                startActivity(profileIntent);
+            }
+            return true;
+                });
     }
 
-    private boolean checkIfUserIsAdmin(FirebaseUser user) {
-        // Implement your logic to determine if the user is an admin
-        // For example, checking Shared Preferences or a field in Firebase
-        return false; // Placeholder return
-    }
-
-    private void navigateToLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    private void navigateToAdminArea() {
-        // Navigate to Admin Area
-    }
 }

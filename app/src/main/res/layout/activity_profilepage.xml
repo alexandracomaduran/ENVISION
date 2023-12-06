@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/settingsButton"
         android:layout_width="70dp"
         android:layout_height="50dp"
         android:background="@color/transparent"

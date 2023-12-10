@@ -25,7 +25,7 @@
         android:id="@+id/passwordSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_password"
+        android:hint="@string/hint_password_signup"
         android:inputType="textPassword"/>
 
     <EditText
@@ -35,6 +35,7 @@
         android:hint="@string/hint_confirm_password"
         android:inputType="textPassword"
         android:layout_marginTop="10dp"/>
+
 
     <Button
         android:id="@+id/signUpButton"

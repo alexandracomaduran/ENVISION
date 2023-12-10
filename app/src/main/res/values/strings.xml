@@ -1,7 +1,8 @@
 <resources>
         <string name="app_name">ENVISION</string>
         <string name="hint_email">Email</string>
-        <string name="hint_password">Password</string>
+        <string name="hint_password_login">Password</string>
+        <string name="hint_password_signup">Password (at least 6 characters!)</string>
         <string name="action_login">Login</string>
         <string name="action_sign_up">Sign Up</string>
         <string name="error_fields_required">Please enter username and password</string>
@@ -23,6 +24,7 @@
         <string name = "settings_text">Settings</string>
         <string name = "settings_ChangePP">Change Profile Picture</string>
         <string name = "settings_ChangePD">Change Profile Description</string>
+        <string name="firestore_error">Firestore error</string>
 
 
 </resources>

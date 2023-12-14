@@ -2,6 +2,7 @@ package com.aac.envision;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -78,7 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
                             changeProfileDescriptionButton.setVisibility(View.VISIBLE);
                         }
                     } else {
-                        //Document doesn't exist
+                        //Document doesn't exist    
                         Toast.makeText(SettingsActivity.this, "Document doesn't exist. ", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -104,13 +105,14 @@ public class SettingsActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
 
             if(item.getItemId() == R.id.home_navigation) {
-
                 Intent homeIntent = new Intent(SettingsActivity.this, HomeActivity.class);
                 startActivity(homeIntent);
-
             } else if (item.getItemId() == R.id.profile_navigation){
                 Intent profileIntent = new Intent(SettingsActivity.this, ProfilePageActivity.class);
                 startActivity(profileIntent);
+            } else if (item.getItemId() == R.id.post_navigation) {
+                Intent postIntent = new Intent(SettingsActivity.this, PostActivity.class);
+                startActivity(postIntent);
             }
             return true;
         });

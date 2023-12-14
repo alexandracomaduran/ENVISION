@@ -24,7 +24,8 @@
         <string name = "settings_text">Settings</string>
         <string name = "settings_ChangePP">Change Profile Picture</string>
         <string name = "settings_ChangePD">Change Profile Description</string>
-        <string name="firestore_error">Firestore error</string>
+        <string name= "firestore_error">Firestore error</string>
+        <string name= "file_selected">File Selected: </string>
 
 
 </resources>

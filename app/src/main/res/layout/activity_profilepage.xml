@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/profilepage_textview"
-        android:layout_width="423dp"
-        android:layout_height="125dp"
-        android:layout_marginTop="300dp"
-        android:gravity="center"
-        android:text="To be Designed"
-        android:textSize="33sp"
+        android:id="@+id/profilepage_email"
+        android:layout_width="240dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:gravity="left"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/profilepage_description"
+        android:layout_width="407dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/profilepage_profilepicture"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,8 +42,9 @@
         android:id="@+id/settingsButton"
         android:layout_width="70dp"
         android:layout_height="50dp"
+        android:layout_marginTop="4dp"
         android:background="@color/transparent"
-        android:gravity="center"
+        android:gravity="right"
         android:text="text"
         app:icon="@drawable/ic_settings"
         app:iconSize="35dp"
@@ -32,6 +53,16 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profilepage_description" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"

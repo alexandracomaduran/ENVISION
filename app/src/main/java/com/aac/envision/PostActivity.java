@@ -4,6 +4,7 @@ import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -16,20 +17,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.firebase.firestore.EventListener;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
-    public class PostActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity {
 
         private static final int PICK_IMAGE_REQUEST = 1;
         private static final int PICK_VIDEO_REQUEST = 2;
@@ -43,11 +50,14 @@ import java.util.Map;
         private FirebaseAuth firebaseAuth;
         private FirebaseFirestore firestore;
         private FirebaseStorage storage;
+        private PostAdapter postAdapter;
         BottomNavigationView bottomNavigationView;
+        private Button logoutButton;
 
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
+
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_post);
 
@@ -61,6 +71,20 @@ import java.util.Map;
             submitButton = findViewById(R.id.submitButton);
             uploadTextView = findViewById(R.id.uploadTextView);
             progressBar = findViewById(R.id.postProgressBar);
+            logoutButton = findViewById(R.id.logoutButton);
+
+            logoutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Sign out the user
+                    FirebaseAuth.getInstance().signOut();
+
+                    // Navigate to the LoginActivity or your desired destination after logout
+                    Intent intent = new Intent(PostActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish(); // Close the SettingsActivity
+                }
+            });
 
             chooseFileButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -108,7 +132,6 @@ import java.util.Map;
         private void openFileChooser() {
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
             intent.setType("image/* video/*");
-            startActivityForResult(intent, PICK_IMAGE_REQUEST, null);
             startActivityForResult(intent, PICK_IMAGE_REQUEST);
         }
 
@@ -164,7 +187,7 @@ import java.util.Map;
                                     @Override
                                     public void onSuccess(Uri downloadUri) {
                                         // Add post data to Firestore
-                                        addPostToFirestore(downloadUri.toString());
+                                        getIndexAndAddPost(downloadUri.toString());
                                     }
                                 });
                             } else {
@@ -174,21 +197,38 @@ import java.util.Map;
                     });
         }
 
+
+    private void getIndexAndAddPost(String uri) {
+        firestore.collection("posts").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            int documentCount = queryDocumentSnapshots.size();
+            int index = documentCount;
+
+            // Now that you have the index, call the method to add the post
+            addPostToFirestore(uri, index);
+        }).addOnFailureListener(e -> {
+            // Handle failure
+            Log.e("Firestore", "Error getting document count", e);
+        });
+    }
         // Add post data to Firestore
-        private void addPostToFirestore(String downloadUrl) {
+        private void addPostToFirestore(String downloadUrl, int index) {
             String uid = firebaseAuth.getCurrentUser().getUid();
-            String timestamp = FieldValue.serverTimestamp().toString();
+
+            Toast.makeText(PostActivity.this, ("The index is: " + index), Toast.LENGTH_SHORT).show();
+            System.out.println("The index is: " + index);
 
             Map<String, Object> postDoc = new HashMap<>();
             postDoc.put("GlobalUserID", uid);
             postDoc.put("MediaURL", downloadUrl);
-            postDoc.put("Timestamp", timestamp);
+            postDoc.put("Index", index);
 
+            //STORE POST REFERENCE IN ARRAY POSTREFERENCES FOR USER:
             firestore.collection("users").document(uid).collection("posts").add(postDoc).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             //Update postReferences in user's document
                             updatePostReferences(uid, documentReference.getId());
+                            //Call EventChangeListener here to update user data and reflect new post
                         }
                     })
                     .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -213,14 +253,21 @@ import java.util.Map;
                     .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
-                            if (!task.isSuccessful()) {
-                                Toast.makeText(PostActivity.this, "Firestore error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            if (task.isSuccessful()) {
+                                //no errors
+                                Log.d("Firestore", "Post added successfully");
+                            } else {
+                                //handle errors
+                                Exception e = task.getException();
+                                Log.e("Firestore", "Error adding post", e);
+                                Toast.makeText(PostActivity.this, "Firestore error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
         }
 
-        //Update postReferences in user's document
+
+    //Update postReferences in user's document
         private void updatePostReferences(String uid, String postId) {
             firestore.collection("users").document(uid)
                     .update("postReferences", FieldValue.arrayUnion(postId))
@@ -255,10 +302,6 @@ import java.util.Map;
             }
         }
 
-        @Override
-        protected void onDestroy() {
-            super.onDestroy();
-        }
 
 
-    }
+}

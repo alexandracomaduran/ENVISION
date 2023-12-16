@@ -4,42 +4,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".PostActivity"
+    tools:context=".ChangeProfilePictureActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/uploadTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/changeDTextView"
+        android:layout_width="500dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="0dp"
+        android:text="@string/change_description_below_150_chars"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"/>
+        android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/chooseFileButton"
+
+    <EditText
+        android:id="@+id/descriptionTextInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/uploadTextView"
-        android:layout_marginTop="245dp"
-        android:text="Choose File" />
+        android:maxLength="150"
+        android:hint="@string/enter_description_here"
+        android:layout_below="@id/changeDTextView"
+        android:layout_marginTop="0dp"
+        />
 
     <Button
         android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/chooseFileButton"
-        android:layout_marginTop="16dp"
-        android:text="Submit" />
-
-    <ProgressBar
-        android:id="@+id/postProgressBar"
-        android:layout_width="74dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/submitButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp" />
-
+        android:layout_below="@id/descriptionTextInput"
+        android:layout_marginTop="20dp"
+        android:text="@string/submit" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -51,3 +46,4 @@
         app:menu="@menu/navigation_menu" />
 
 </RelativeLayout>
+

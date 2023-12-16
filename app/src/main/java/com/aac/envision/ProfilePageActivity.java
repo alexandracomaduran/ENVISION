@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;  // Import Glide
+import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
@@ -20,13 +21,16 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProfilePageActivity extends AppCompatActivity {
 
     private TextView emailTextView;
     private TextView descriptionTextView;
     private ImageView profilePictureImageView;
     private RecyclerView recyclerView;
-    private PostAdapter adapter;
+    private PostAdapterUser adapterUser;
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -40,20 +44,20 @@ public class ProfilePageActivity extends AppCompatActivity {
         profilePictureImageView = findViewById(R.id.profilepage_profilepicture);
 
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         bottomNavigationView = findViewById(R.id.navigation);
+
         // Set up bottom navigation item selected listener
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.home_navigation) {
                 Intent homeIntent = new Intent(ProfilePageActivity.this, HomeActivity.class);
                 startActivity(homeIntent);
             } else if (item.getItemId() == R.id.profile_navigation) {
-                Intent profileIntent = new Intent(ProfilePageActivity.this, ProfilePageActivity.class);
-                startActivity(profileIntent);
+                // Already in the profile page
             } else if (item.getItemId() == R.id.post_navigation) {
-                Intent profileIntent = new Intent(ProfilePageActivity.this, PostActivity.class);
-                startActivity(profileIntent);
+                Intent postIntent = new Intent(ProfilePageActivity.this, PostActivity.class);
+                startActivity(postIntent);
             }
             return true;
         });
@@ -74,10 +78,11 @@ public class ProfilePageActivity extends AppCompatActivity {
 
             firestore.collection("users").document(userId).get()
                     .addOnSuccessListener(documentSnapshot -> {
+
+
                         if (documentSnapshot.exists()) {
                             String userEmail = documentSnapshot.getString("email");
                             String userDescription = documentSnapshot.getString("pageDescription");
-
 
                             emailTextView.setText(userEmail);
                             descriptionTextView.setText(userDescription);
@@ -96,16 +101,46 @@ public class ProfilePageActivity extends AppCompatActivity {
                         }
                     });
 
-            Query query = firestore.collection("posts").whereEqualTo("GlobalUserId", userId).orderBy("Index", Query.Direction.DESCENDING);
-            adapter = new PostAdapter(createOptionsForAdapter(query));
+           //Retrieve all posts and filter based on user ID
 
-            recyclerView.setAdapter(adapter);
+            firestore.collection("posts")
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        List<Post> allPosts = new ArrayList<>();
+
+                        for(DocumentSnapshot document : queryDocumentSnapshots) {
+                            Post post = document.toObject(Post.class);
+                            if(post != null) {
+                                allPosts.add(post);
+                            }
+                        }
+
+                        //Filter posts based on GlobalUserID
+                        List<Post> userPosts = filterPostsByUserID(allPosts, userId);
+
+                        adapterUser = new PostAdapterUser(userPosts, this);
+                        recyclerView.setAdapter(adapterUser);
+
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(this, "Failure in retrieving posts", Toast.LENGTH_SHORT).show();
+                    });
         }
+
     }
 
-    private FirestoreRecyclerOptions<Post> createOptionsForAdapter(Query query) {
-        return new FirestoreRecyclerOptions.Builder<Post>()
-                .setQuery(query, Post.class)
-                .build();
+    // Helper method to filter posts based on user ID
+    private List<Post> filterPostsByUserID(List<Post> allPosts, String userId) {
+        List<Post> userPosts = new ArrayList<>();
+
+        for (Post post : allPosts) {
+            if (userId.equals(post.getGlobalUserID())) {
+                userPosts.add(post);
+            }
+        }
+
+        return userPosts;
     }
+
+
 }

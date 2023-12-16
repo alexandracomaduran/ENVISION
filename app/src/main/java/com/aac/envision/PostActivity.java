@@ -52,8 +52,6 @@ public class PostActivity extends AppCompatActivity {
         private FirebaseStorage storage;
         private PostAdapter postAdapter;
         BottomNavigationView bottomNavigationView;
-        private Button logoutButton;
-
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -71,20 +69,7 @@ public class PostActivity extends AppCompatActivity {
             submitButton = findViewById(R.id.submitButton);
             uploadTextView = findViewById(R.id.uploadTextView);
             progressBar = findViewById(R.id.postProgressBar);
-            logoutButton = findViewById(R.id.logoutButton);
 
-            logoutButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Sign out the user
-                    FirebaseAuth.getInstance().signOut();
-
-                    // Navigate to the LoginActivity or your desired destination after logout
-                    Intent intent = new Intent(PostActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish(); // Close the SettingsActivity
-                }
-            });
 
             chooseFileButton.setOnClickListener(new View.OnClickListener() {
                 @Override

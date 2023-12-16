@@ -65,7 +65,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         Post post = postArrayList.get(position);
         fetchUserForPost(post, holder);
-        //TESTING OUT GLIDE TO SEE IF IT WORKS::
+
         Glide.with(holder.itemView.getContext()).
                 load(post.getMediaURL()).
                 into(holder.imageView);
@@ -98,7 +98,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
 
     public int getItemCount() {
-        return postArrayList.size();
+        if (postArrayList != null) {
+            return postArrayList.size();
+        } else {
+            return 0; // or any other value you prefer for empty state
+        }
     }
 
     public static class PostViewHolder extends RecyclerView.ViewHolder {

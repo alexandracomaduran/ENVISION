@@ -26,6 +26,10 @@
         <string name = "settings_ChangePD">Change Profile Description</string>
         <string name= "firestore_error">Firestore error</string>
         <string name= "file_selected">File Selected: </string>
+    <string name="upload_profile_pic_below">Upload Profile Pic Below</string>
+    <string name="change_description_below_150_chars">Change Description Below (150 chars)</string>
+    <string name="enter_description_here">Enter description here...</string>
+        <string name="submit">Submit</string>
 
 
 </resources>

@@ -29,7 +29,10 @@
             android:exported="false" />
         <activity android:name=".PostActivity"
             android:exported="false" />
-
+        <activity android:name=".ChangeProfileDescriptionActivity"
+            android:exported="false" />
+        <activity android:name=".ChangeProfilePictureActivity"
+            android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">

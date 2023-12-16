@@ -117,6 +117,19 @@ public class SettingsActivity extends AppCompatActivity {
             return true;
         });
 
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Sign out the user
+                FirebaseAuth.getInstance().signOut();
+
+                // Navigate to the LoginActivity or your desired destination after logout
+                Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish(); // Close the SettingsActivity
+            }
+        });
+
 
 
         // Click Listeners for Buttons
@@ -137,21 +150,16 @@ public class SettingsActivity extends AppCompatActivity {
         changeProfilePicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle Change Profile Picture button click for regular users
+                Intent profilePicIntent = new Intent(SettingsActivity.this, ChangeProfilePictureActivity.class);
+                startActivity(profilePicIntent);
             }
         });
 
         changeProfileDescriptionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle Change Profile Description button click for regular users
-            }
-        });
-
-        removeAccountButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Handle Remove Account button click (common for both)
+                Intent descriptionIntent = new Intent(SettingsActivity.this, ChangeProfileDescriptionActivity.class);
+                startActivity(descriptionIntent);
             }
         });
 

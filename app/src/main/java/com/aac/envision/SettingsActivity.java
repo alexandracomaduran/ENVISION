@@ -47,7 +47,6 @@ public class SettingsActivity extends AppCompatActivity {
         postsManagementButton = findViewById(R.id.postsManagement);
         changeProfilePicButton = findViewById(R.id.changeProfilePic);
         changeProfileDescriptionButton = findViewById(R.id.changeProfileDescription);
-        removeAccountButton = findViewById(R.id.removeAccountButton);
         logoutButton = findViewById(R.id.logoutButton);
         bottomNavigationView = findViewById(R.id.navigation);
 

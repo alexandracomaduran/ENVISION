@@ -8,8 +8,8 @@
     app:cardElevation="8dp"
     app:cardCornerRadius="8dp"
     android:layout_margin="50dp"
-    android:layout_height="175dp"
-    android:layout_width="300dp">
+    android:layout_height="215dp"
+    android:layout_width="275dp">
 
     <LinearLayout
 
@@ -23,6 +23,7 @@
         android:orientation="vertical">
 
 
+
         <LinearLayout
 
 
@@ -32,16 +33,17 @@
             android:layout_height="match_parent"
 
 
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
 
             <ImageView
 
 
                 android:id="@+id/tvPostImage"
-                android:layout_width="150dp"
+                android:layout_width="200dp"
                 android:layout_height="175dp"
-                android:layout_weight="2" />
+                android:layout_weight="2"
+                android:layout_gravity="center"/>
 
             <LinearLayout
 
@@ -53,13 +55,16 @@
 
 
                 android:layout_marginStart="8dp"
+                android:layout_gravity="center"
 
 
                 android:layout_weight="2.5"
-                android:gravity="center_vertical"
+                android:gravity="center_horizontal"
 
 
-                android:orientation="vertical">
+                android:orientation="horizontal">
+
+
 
 
                 <TextView
@@ -80,7 +85,9 @@
                     android:textSize="25sp"
 
 
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+
+                    />
 
 
                 <TextView

@@ -111,7 +111,6 @@ public class PostsManagementActivity extends AppCompatActivity {
             }
         }
 
-        // Clear the selection
         clearSelection();
     }
 
@@ -171,7 +170,7 @@ public class PostsManagementActivity extends AppCompatActivity {
                         TextView emailTextView = view.findViewById(R.id.emailTextView);
                         emailTextView.setText(userEmail);
                     } else {
-                        // Handle the case where user document does not exist
+                        Toast.makeText(this, "User document does not exist",Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(e -> {

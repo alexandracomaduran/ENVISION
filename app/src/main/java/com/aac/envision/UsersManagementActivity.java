@@ -102,7 +102,6 @@ public class UsersManagementActivity extends AppCompatActivity {
     }
 
     private void changeRole() {
-        // Implement the logic to change the role of selected users to Admin
         for (String selectedUser : selectedUsers) {
             firestore.collection("users")
                     .document(selectedUser)
@@ -122,7 +121,6 @@ public class UsersManagementActivity extends AppCompatActivity {
     }
 
     private void deleteUser() {
-        // Implement the logic to delete selected users
         for (String selectedUser : selectedUsers) {
             firestore.collection("users")
                     .document(selectedUser)

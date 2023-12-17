@@ -29,12 +29,10 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // Check if the user is signed in (non-null) and update UI accordingly.
+
         // **Shows persistence.**
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
-            // User is signed in, proceed to main app or show welcome message
-            // For example, start another activity or show content in this one
             navigateToMainApp();
         }
 

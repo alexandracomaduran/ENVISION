@@ -117,19 +117,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
 
-        /**
-         * COMMENTING THIS OUT FOR NOW, MIGHT USE LATER
-         * public void bind(Post post) {
-            // Set data to views
-            Glide.with(itemView.getContext())
-                    .load(post.getMediaURL())
-                    .into(imageView);
-
-            // Assuming timestampTextView is a TextView, you need to format the date
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-            String formattedDate = dateFormat.format(post.getTimestamp());
-            timestampTextView.setText(formattedDate);
-        } **/
 
     }
 

@@ -188,7 +188,6 @@ public class PostActivity extends AppCompatActivity {
             int documentCount = queryDocumentSnapshots.size();
             int index = documentCount;
 
-            // Now that you have the index, call the method to add the post
             addPostToFirestore(uri, index);
         }).addOnFailureListener(e -> {
             // Handle failure
@@ -207,7 +206,6 @@ public class PostActivity extends AppCompatActivity {
             postDoc.put("MediaURL", downloadUrl);
             postDoc.put("Index", index);
 
-            //STORE POST REFERENCE IN ARRAY POSTREFERENCES FOR USER:
             firestore.collection("users").document(uid).collection("posts").add(postDoc).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {

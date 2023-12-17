@@ -17,7 +17,6 @@ public class Post {
         this.GlobalUserID = GlobalUserID;
         this.MediaURL = MediaURL;
         this.Index = Index;
-        //Index will be set on the server side when document is created
     }
     
 

@@ -30,6 +30,10 @@
     <string name="change_description_below_150_chars">Change Description Below (150 chars)</string>
     <string name="enter_description_here">Enter description here...</string>
         <string name="submit">Submit</string>
+    <string name="delete_selected_posts">Delete Selected Posts</string>
+        <string name="make_user_admin">Make User Admin</string>
+        <string name="delete_user">Delete User</string>
+
 
 
 </resources>

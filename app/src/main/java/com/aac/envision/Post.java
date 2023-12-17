@@ -4,6 +4,7 @@ public class Post {
     private String GlobalUserID;
     private String MediaURL;
     private int Index;
+    private boolean isSelected;
 
 
     // Constructors, getters, and setters...
@@ -41,6 +42,14 @@ public class Post {
 
     public int getIndex() {
         return Index;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 
 }

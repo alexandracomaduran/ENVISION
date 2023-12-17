@@ -23,7 +23,6 @@ import com.google.firebase.firestore.CollectionReference;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private Button usersManagementButton;
     private Button postsManagementButton;
     private Button changeProfilePicButton;
     private Button changeProfileDescriptionButton;
@@ -43,7 +42,6 @@ public class SettingsActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         // Initialize buttons
-        usersManagementButton = findViewById(R.id.usersManagement);
         postsManagementButton = findViewById(R.id.postsManagement);
         changeProfilePicButton = findViewById(R.id.changeProfilePic);
         changeProfileDescriptionButton = findViewById(R.id.changeProfileDescription);
@@ -67,12 +65,10 @@ public class SettingsActivity extends AppCompatActivity {
 
                         //Visibility of Buttons
                         if ("Admin".equals(userRole)) {
-                            usersManagementButton.setVisibility(View.VISIBLE);
                             postsManagementButton.setVisibility(View.VISIBLE);
-                            changeProfilePicButton.setVisibility(View.GONE);
-                            changeProfileDescriptionButton.setVisibility(View.GONE);
+                            changeProfilePicButton.setVisibility(View.VISIBLE);
+                            changeProfileDescriptionButton.setVisibility(View.VISIBLE);
                         } else {
-                            usersManagementButton.setVisibility(View.GONE);
                             postsManagementButton.setVisibility(View.GONE);
                             changeProfilePicButton.setVisibility(View.VISIBLE);
                             changeProfileDescriptionButton.setVisibility(View.VISIBLE);
@@ -132,17 +128,21 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         // Click Listeners for Buttons
-        usersManagementButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Handle Users Management button click for admins
-            }
-        });
+//        usersManagementButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent usersManagementIntent = new Intent(SettingsActivity.this, UsersManagementActivity.class);
+//                startActivity(usersManagementIntent);
+//
+//            }
+//        });
 
         postsManagementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Handle Posts Management button click for admins
+                Intent postsManagementIntent = new Intent(SettingsActivity.this, PostsManagementActivity.class);
+                startActivity(postsManagementIntent);
+
             }
         });
 

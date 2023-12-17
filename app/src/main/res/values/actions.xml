@@ -1,0 +1,6 @@
+<resources>
+    <string-array name="actions">
+        <item>Make User Admin</item>
+        <item>Delete User</item>
+    </string-array>
+</resources>

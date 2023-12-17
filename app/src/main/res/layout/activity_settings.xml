@@ -20,67 +20,61 @@
 
 
     <!-- ***THIS BUTTON FOR ADMINS/MODS ONLY -->
-    <Button
-        android:id="@+id/usersManagement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="492dp"
-        android:text="@string/users_management_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0" />
-    <!-- *** -->
-    <!-- Users button -->
+<!--    <Button-->
+<!--        android:id="@+id/usersManagement"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="492dp"-->
+<!--        android:text="@string/users_management_text"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0" />-->
+<!--    -->
+
+    <!-- ***THIS BUTTON FOR ADMINS/MODS ONLY -->
+
+
     <Button
         android:id="@+id/changeProfilePic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="492dp"
+        android:layout_marginBottom="408dp"
         android:text="@string/settings_ChangePP"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0" />
-    <!-- -->
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- ***THIS BUTTON FOR ADMINS/MODS ONLY -->
     <Button
         android:id="@+id/postsManagement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="412dp"
+        android:layout_marginBottom="468dp"
         android:text="@string/posts_management_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0" />
-    <!-- *** -->
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Users button-->
     <Button
         android:id="@+id/changeProfileDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="412dp"
+        android:layout_marginBottom="348dp"
         android:text="@string/settings_ChangePD"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0" />
-    <!-- -->
+        app:layout_constraintStart_toStartOf="parent" />
 
-
-   <Button
+    <Button
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="252dp"
+        android:layout_marginBottom="284dp"
         android:text="@string/logout_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigation"
